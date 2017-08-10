@@ -3,6 +3,7 @@
 .editorconfig
 .travis.yml
 yarn.lock
+fixtures
 */**/*.test.js
 CONTRIBUTING.md
 README.md
