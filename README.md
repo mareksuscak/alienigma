@@ -1,6 +1,6 @@
 # alienigma [![Build Status](https://travis-ci.org/mareksuscak/alienigma.svg?branch=master)](https://travis-ci.org/mareksuscak/alienigma)
 👽  Specialized cipher machine developed to protect aliens from deciphering 
-human communication.
+human communication. It uses Morse code with further obfuscation.
 
 ## Installation
 
@@ -17,6 +17,9 @@ yarn global add https://github.com/mareksuscak/flatten-deep-js
 ```sh
 # Encoding a UTF-8 text file (prints the encoded message on standard output)
 $ alienigma encode secret_message.txt
+
+# Encode without obfuscation
+$ alienigma --no-obfuscation encode secret_message.txt
 
 # Encoding a UTF-8 text from standard input
 $ cat secret_message.txt | alienigma encode
