@@ -52,7 +52,7 @@ yarn test
 
 - No code coverage monitoring (Jest [supports --coverage flag](http://facebook.github.io/jest/docs/cli.html#coverage) + 
   [junit reporter](https://github.com/larrymyers/jasmine-reporters) necessary)
-- Missing end-to-end tests
+- Missing end-to-end tests ([nixt](https://github.com/vesln/nixt))
 - Missing benchmarks ([benchmark.js](https://benchmarkjs.com/))
 - No [eslint](http://eslint.org/) checks
 - Not using [flow](https://flow.org/) for static type checks
