@@ -1,0 +1,29 @@
+{
+  "name": "alienigma",
+  "version": "0.0.1",
+  "description": "Specialized cipher machine developed to protect aliens from deciphering human communication",
+  "main": "src/alienigma.js",
+  "bin": {
+    "alienigma": "bin/alienigma"
+  },
+  "scripts": {
+    "start": "alienigma",
+    "test": "jest"
+  },
+  "repository": "https://github.com/mareksuscak/alienigma.git",
+  "keywords": [
+    "cipher",
+    "machine"
+  ],
+  "author": "Marek Suscak <marek.suscak@gmail.com>",
+  "license": "MIT",
+  "bugs": "https://github.com/mareksuscak/alienigma/issues",
+  "homepage": "https://github.com/mareksuscak/alienigma#readme",
+  "dependencies": {
+    "chalk": "^2.1.0",
+    "commander": "^2.11.0"
+  },
+  "devDependencies": {
+    "jest": "^20.0.4"
+  }
+}

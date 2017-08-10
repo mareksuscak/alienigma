@@ -1,0 +1,66 @@
+#!/usr/bin/env node
+
+'use strict'
+
+const pkg = require('../package.json')
+const program = require('commander')
+const readline = require('readline')
+const chalk = require('chalk')
+const alienigma = require('../src/alienigma')
+
+const log = console.log
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: Boolean(process.stdin.isTTY)
+})
+
+if (process.stdin.isTTY && !process.stdout.isTTY) {
+  console.error(`${chalk.red('When piping output to a file, make sure to pipe input into the program.')}`)
+  process.exit(1)
+}
+
+program.version(pkg.version)
+program
+  .command('cipher')
+  .alias('ci')
+  .description('ciphers a given message')
+  .option('-O, --no-obfuscation', 'disables the obfuscation')
+  .action((cmd) => {
+    const cipherOptions = {
+      obfuscate: cmd.obfuscation
+    }
+
+    if (process.stdin.isTTY) {
+      log(`${chalk.green('Hey human! Enter your plain text message below and press CTRL+C or CTRL+D when done:')}\n`)
+    }
+
+    const lines = []
+    rl.on('line', (line) => lines.push(alienigma(line, cipherOptions)))
+    rl.on('close', () => {
+      if (process.stdin.isTTY) {
+        log()
+      }
+
+      if (process.stdout.isTTY) {
+        log(`${chalk.yellow(`Shhh! Here's a ciphered message:`)}\n`)
+      }
+
+      lines.forEach((line) => log(line))
+    })
+  })
+  .on('--help', function () {
+    console.log()
+    console.log('  Examples:')
+    console.log()
+    console.log('    $ alienigma ci')
+    console.log('    $ alienigma cipher')
+    console.log('    $ alienigma cipher < secret_message.txt')
+    console.log('    $ cat secret_message.txt | alienigma cipher')
+    console.log('    $ alienigma -O cipher')
+    console.log('    $ alienigma --no-obfuscation cipher')
+    console.log()
+  })
+
+program.parse(process.argv)
+

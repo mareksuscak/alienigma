@@ -15,18 +15,22 @@ yarn global add https://github.com/mareksuscak/flatten-deep-js
 ## How To Use
 
 ```sh
-# Encoding a UTF-8 text file (prints the encoded message on standard output)
-$ alienigma encode secret_message.txt
+# Prints help
+$ alienigma
+$ alienigma help
 
-# Encode without obfuscation
-$ alienigma --no-obfuscation encode secret_message.txt
+# Ciphering a UTF-8 text from standard input
+$ alienigma cipher
 
-# Encoding a UTF-8 text from standard input
-$ cat secret_message.txt | alienigma encode
-$ alienigma encode < secret_message.txt
+# Ciphering a UTF-8 text file (prints the ciphered message on standard output)
+$ cat secret_message.txt | alienigma cipher
+$ alienigma cipher < secret_message.txt
 
-# Writing the encoded message to a text file
-$ alienigma encode secret_message.txt > encoded_message.txt
+# Ciphering without obfuscation
+$ alienigma --no-obfuscation cipher
+
+# Writing the ciphered message to a text file
+$ cat secret_message.txt | alienigma cipher > ciphered_message.txt
 ```
 
 ## Running Tests
@@ -53,6 +57,7 @@ yarn test
 
 ## Known Issues
 
+- Can't decode/deobfuscate messages at the moment
 - No code coverage monitoring (Jest [supports --coverage flag](http://facebook.github.io/jest/docs/cli.html#coverage) + 
   [junit reporter](https://github.com/larrymyers/jasmine-reporters) necessary)
 - Missing end-to-end tests ([nixt](https://github.com/vesln/nixt))
