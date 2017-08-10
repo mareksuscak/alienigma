@@ -27,6 +27,7 @@ program
   .description('ciphers a given message')
   .option('-O, --no-obfuscation', 'disables the obfuscation')
   .action((cmd) => {
+    const lines = []
     const cipherOptions = {
       obfuscate: cmd.obfuscation
     }
@@ -35,7 +36,6 @@ program
       log(`${chalk.green('Hey human! Enter your plain text message below and press CTRL+C or CTRL+D when done:')}\n`)
     }
 
-    const lines = []
     rl.on('line', (line) => lines.push(alienigma(line, cipherOptions)))
     rl.on('close', () => {
       if (process.stdin.isTTY) {
@@ -64,3 +64,7 @@ program
 
 program.parse(process.argv)
 
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+  process.exit(1)
+}
