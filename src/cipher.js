@@ -15,12 +15,26 @@ const LINE_SEPARATOR_REGEX = /\n+/
  * 4. Message is encoded with Morse Code encoder
  */
 
+/**
+ * Inserts the pipe (|) in between all the letters.
+ *
+ * @param  {string} word Word to process
+ * @return {string} Processed word
+ */
 const processWord = (word) => (
   word
     .split('')
     .join(CIPHER_LETTER_SEPARATOR) /* 1 */
 )
 
+/**
+ * Splits the line into words, processes
+ * them further by calling processWord and
+ * joins them with forward slash (/).
+ *
+ * @param  {string} line Line to process
+ * @return {string} Processed line
+ */
 const processLine = (line) => (
   line
     .split(WORD_SEPARATOR_REGEX)
@@ -28,6 +42,15 @@ const processLine = (line) => (
     .join(CIPHER_WORD_SEPARATOR) /* 2 */
 )
 
+/**
+ * Splits the message into lines, processes
+ * them further by calling processLine and
+ * joins them with a line feed char (\n).
+ *
+ * @private
+ * @param  {string} message Message to process
+ * @return {string} Processed message
+ */
 const processMessage = (message) => (
   message
     .split(LINE_SEPARATOR_REGEX)
@@ -35,6 +58,12 @@ const processMessage = (message) => (
     .join('\n') /* 3 */
 )
 
+/**
+ * Ciphers a message with a modified Morse code
+ *
+ * @param  {string} message Messate to encode
+ * @return {string} An ciphered message
+ */
 const cipher = (message) => (
   morse.encode(processMessage(message)) /* 4 */
 )

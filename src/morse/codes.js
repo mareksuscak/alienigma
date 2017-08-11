@@ -1,3 +1,7 @@
+/**
+ * An international Morse alphabet map
+ * @type {Object}
+ */
 module.exports = {
   'A': '.-',
   'B': '-...',
