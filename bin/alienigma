@@ -20,35 +20,37 @@ if (process.stdin.isTTY && !process.stdout.isTTY) {
   process.exit(1)
 }
 
+const runCipherCommand = (cmd) => {
+  const lines = []
+  const cipherOptions = {
+    obfuscate: cmd.obfuscation
+  }
+
+  if (process.stdin.isTTY) {
+    log(`${chalk.green('Hey human! Enter your plain text message below and press CTRL+C or CTRL+D when done:')}\n`)
+  }
+
+  rl.on('line', (line) => lines.push(alienigma(line, cipherOptions)))
+  rl.on('close', () => {
+    if (process.stdin.isTTY) {
+      log()
+    }
+
+    if (process.stdout.isTTY) {
+      log(`${chalk.yellow(`Shhh! Here's a ciphered message:`)}\n`)
+    }
+
+    lines.forEach((line) => log(line))
+  })
+}
+
 program.version(pkg.version)
 program
   .command('cipher')
   .alias('ci')
   .description('ciphers a given message')
   .option('-O, --no-obfuscation', 'disables the obfuscation')
-  .action((cmd) => {
-    const lines = []
-    const cipherOptions = {
-      obfuscate: cmd.obfuscation
-    }
-
-    if (process.stdin.isTTY) {
-      log(`${chalk.green('Hey human! Enter your plain text message below and press CTRL+C or CTRL+D when done:')}\n`)
-    }
-
-    rl.on('line', (line) => lines.push(alienigma(line, cipherOptions)))
-    rl.on('close', () => {
-      if (process.stdin.isTTY) {
-        log()
-      }
-
-      if (process.stdout.isTTY) {
-        log(`${chalk.yellow(`Shhh! Here's a ciphered message:`)}\n`)
-      }
-
-      lines.forEach((line) => log(line))
-    })
-  })
+  .action(runCipherCommand)
   .on('--help', function () {
     console.log()
     console.log('  Examples:')
@@ -64,6 +66,7 @@ program
 
 program.parse(process.argv)
 
+// Output help when no command is provided
 if (!process.argv.slice(2).length) {
   program.outputHelp();
   process.exit(1)
