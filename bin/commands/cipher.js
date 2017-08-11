@@ -15,12 +15,24 @@ const lineBuffer = []
 const onReceiveLine = (line) => lineBuffer.push(line)
 const onInputStreamClose = () => {
   if (process.stdin.isTTY) { log() }
+
+  const runnerOptions = { obfuscate: cmdArgs.obfuscation }
+  const encodedLines = lineBuffer.map((line) => {
+    let encodedLine = ''
+
+    try {
+      encodedLine = alienigma.run(line, runnerOptions)
+    } catch (error) {
+      log(`\n${chalk.red(`Oops. An error occurred: \n\n${error.message}`)}`)
+      process.exit(1)
+    }
+
+    return encodedLine
+  })
+
   if (process.stdout.isTTY) {
     log(`${chalk.yellow(`Shhh! Here's your ${cmdArgs.obfuscation ? 'ciphered and obfuscated' : 'ciphered'} message:`)}\n`)
   }
-
-  const runnerOptions = { obfuscate: cmdArgs.obfuscation }
-  const encodedLines = lineBuffer.map((line) => alienigma.run(line, runnerOptions))
 
   log(encodedLines.join('\n'))
 }

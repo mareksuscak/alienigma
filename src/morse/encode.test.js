@@ -82,3 +82,15 @@ test('returns an empty string for a non-string input', () => {
   expect(encode([])).toEqual('')
   expect(encode({})).toEqual('')
 })
+
+test('throws when an unrecognized character is enountered', () => {
+  expect(() => encode('!@#$%^&*()_+')).toThrow()
+})
+
+test('preserves ignored characters', () => {
+  const ignoredChars = '!@#$%^&*()_+'
+
+  expect(() => {
+    encode(ignoredChars, { ignoredChars })
+  }).not.toThrow()
+})

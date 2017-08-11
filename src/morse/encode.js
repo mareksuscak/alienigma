@@ -1,5 +1,9 @@
 const codes = require('./codes')
 
+const DEFAULT_OPTIONS = {
+  ignoredChars: '' // Characters that will be ignored and copied as is
+}
+
 /**
  * Uses Morse Code to encode a given word into a sequence of
  * on and offs represented by dash and dot respectively.
@@ -7,7 +11,7 @@ const codes = require('./codes')
  * @param  {string} word Word to encode
  * @return {string} A sequence of dots and dashes representing the given word
  */
-module.exports = function encode(word) {
+module.exports = function encode(word, options = DEFAULT_OPTIONS) {
   if (!word || typeof word !== 'string') {
     return ''
   }
@@ -19,8 +23,13 @@ module.exports = function encode(word) {
 
     if (code) {
       encodedWord += code
-    } else {
+    } else if (options && options.ignoredChars && options.ignoredChars.includes(character)) {
       encodedWord += character
+    } else {
+      throw new Error(
+        `An unrecognized character was encountered: ${character}. ` +
+        `You can use numbers, dot, comma and ISO basic latin characters (http://bit.ly/2fxRbyM).`
+      )
     }
   }
 

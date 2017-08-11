@@ -64,8 +64,12 @@ const processMessage = (message) => (
  * @param  {string} message Messate to encode
  * @return {string} An ciphered message
  */
-const cipher = (message) => (
-  morse.encode(processMessage(message)) /* 4 */
-)
+const cipher = (message) => {
+  const morseOptions = {
+    ignoredChars: '|/\n\t'
+  }
+
+  return morse.encode(processMessage(message), morseOptions) /* 4 */
+}
 
 module.exports = cipher
