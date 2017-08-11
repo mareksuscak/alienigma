@@ -4,44 +4,13 @@
 
 const pkg = require('../package.json')
 const program = require('commander')
-const readline = require('readline')
 const chalk = require('chalk')
-const alienigma = require('../src/alienigma')
-
-const log = console.log
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: Boolean(process.stdin.isTTY)
-})
+const log = require('./utils/log')
+const commands = require('./commands')
 
 if (process.stdin.isTTY && !process.stdout.isTTY) {
   console.error(`${chalk.red('When piping output to a file, make sure to pipe input into the program.')}`)
   process.exit(1)
-}
-
-const runCipherCommand = (cmd) => {
-  const lines = []
-  const cipherOptions = {
-    obfuscate: cmd.obfuscation
-  }
-
-  if (process.stdin.isTTY) {
-    log(`${chalk.green('Hey human! Enter your plain text message below and press CTRL+C or CTRL+D when done:')}\n`)
-  }
-
-  rl.on('line', (line) => lines.push(alienigma(line, cipherOptions)))
-  rl.on('close', () => {
-    if (process.stdin.isTTY) {
-      log()
-    }
-
-    if (process.stdout.isTTY) {
-      log(`${chalk.yellow(`Shhh! Here's your ${cmd.obfuscation ? 'ciphered and obfuscated' : 'ciphered'} message:`)}\n`)
-    }
-
-    lines.forEach((line) => log(line))
-  })
 }
 
 program.version(pkg.version)
@@ -50,18 +19,18 @@ program
   .alias('ci')
   .description('ciphers a given message')
   .option('-O, --no-obfuscation', 'disables the obfuscation')
-  .action(runCipherCommand)
+  .action(commands.cipher)
   .on('--help', function () {
-    console.log()
-    console.log('  Examples:')
-    console.log()
-    console.log('    $ alienigma ci')
-    console.log('    $ alienigma cipher')
-    console.log('    $ alienigma cipher < secret_message.txt')
-    console.log('    $ cat secret_message.txt | alienigma cipher')
-    console.log('    $ alienigma -O cipher')
-    console.log('    $ alienigma --no-obfuscation cipher')
-    console.log()
+    log()
+    log('  Examples:')
+    log()
+    log('    $ alienigma ci')
+    log('    $ alienigma cipher')
+    log('    $ alienigma cipher < secret_message.txt')
+    log('    $ cat secret_message.txt | alienigma cipher')
+    log('    $ alienigma -O cipher')
+    log('    $ alienigma --no-obfuscation cipher')
+    log()
   })
 
 program.parse(process.argv)

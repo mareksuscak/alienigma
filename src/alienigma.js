@@ -12,10 +12,12 @@ const DEFAULT_OPTIONS = {
  * @param  {Object} options Encoder options.
  * @return {string} Encoded message
  */
-const alienigma = (message, options = DEFAULT_OPTIONS) => (
+const run = (message, options = DEFAULT_OPTIONS) => (
   options.obfuscate
     ? obfuscate(cipher(message))
     : cipher(message)
 )
 
-module.exports = alienigma
+module.exports = {
+  run
+}
