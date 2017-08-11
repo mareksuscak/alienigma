@@ -37,7 +37,7 @@ const runCipherCommand = (cmd) => {
     }
 
     if (process.stdout.isTTY) {
-      log(`${chalk.yellow(`Shhh! Here's a ciphered message:`)}\n`)
+      log(`${chalk.yellow(`Shhh! Here's your ${cmd.obfuscation ? 'ciphered and obfuscated' : 'ciphered'} message:`)}\n`)
     }
 
     lines.forEach((line) => log(line))
